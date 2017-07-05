@@ -1,5 +1,6 @@
 #十折交叉验证法
-#
+#2017.7.5
+#实验结果未保存
 
 from __future__ import absolute_import
 from __future__ import division
@@ -209,7 +210,7 @@ def main():
             train_begin = datetime.datetime.now()
             for i in range(iter_num):  # OK
                 # 留下1000张测试
-                if count > (10152 - batch_size):  # 保证最后一个batch不会取到数据集外,保证只去前4000中的图片
+                if count > (10152 - batch_size):  # 保证最后一个batch不会取到数据集外,保证只去前10152中的图片
                     count = 1
                 # if count>(5640-batch_size):#保证最后一个batch不会取到数据集外
                 #    count = 1
