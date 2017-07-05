@@ -16,9 +16,9 @@ from sklearn.metrics import confusion_matrix
 import tensorflow as tf
 
 #重要参数,运行结束时写入文件
-batch_size = 10
-iter_num = 50
-dropout = 0.75
+batch_size = 50
+iter_num = 10000
+dropout = 1
 learn_rate = 10e-4
 conv_layers = [3,5,1,'same']#stride = 1, pading=same
 pooling_layers=[3,3,2,'same']#stride = 2
@@ -258,7 +258,7 @@ def main():
     result_file.write('image_size: ' + str(image_size) + '\n')
     result_file.write('batch_size: ' + str(batch_size) + '\n')
     result_file.write('iter_num: ' + str(iter_num) + '\n')
-    result_file.write('dropout: ' + str(0.75) + '\n')
+    result_file.write('dropout: ' + str(dropout) + '\n')
     result_file.write('learn_rate: ' + str(learn_rate) + '\n')
     result_file.write('conv_layers: ' + str(conv_layers) + '\n')
     result_file.write('pooling_layers: ' + str(pooling_layers) + '\n')
