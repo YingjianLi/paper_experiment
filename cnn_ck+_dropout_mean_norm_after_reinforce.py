@@ -15,8 +15,15 @@ from sklearn.metrics import confusion_matrix
 
 import tensorflow as tf
 
-batch_size = 50
-iter_num = 5000
+#重要参数,运行结束时写入文件
+batch_size = 10
+iter_num = 50
+dropout = 0.75
+learn_rate = 10e-4
+conv_layers = [3,5,1,'same']#stride = 1, pading=same
+pooling_layers=[3,3,2,'same']#stride = 2
+full_connected_layers = [2,1024,7]
+image_size = 64
 
 def deep_cnn(images):
     """deepnn builds the graph for a deep net for classifying face expression.
@@ -24,9 +31,8 @@ def deep_cnn(images):
       x: an input tensor with the dimensions (N_examples, 64*64), where 64*64 is the
       number of pixels in a face image.
      Returns:
-       A tuple (y, keep_prob). y is a tensor of shape (N_examples, 10), with values
-      equal to the logits of classifying the digit into one of 10 classes (the
-      digits 0-9). keep_prob is a scalar placeholder for the probability of
+       A tuple (y, keep_prob). y is a tensor of shape (N_examples,7), with values
+      equal to the seven emotions. keep_prob is a scalar placeholder for the probability of
      dropout.
     """
     # Reshape to use within a convolutional neural net.
@@ -74,8 +80,8 @@ def deep_cnn(images):
     h_fc1_drop = tf.nn.dropout(h_fc1, keep_prob)
 
 
-    # Map the 1024 features to 10 classes, one for each digit
-   # W_fc2 = weight_variable([1024, 1024])
+    # 增加这一全连接层时准确率降低到40%
+    # W_fc2 = weight_variable([1024, 1024])
     #b_fc2 = bias_variable([1024])
 
     #h_fc2 = tf.nn.relu(tf.matmul(h_fc1_drop, W_fc2) + b_fc2)
@@ -221,7 +227,7 @@ def main():
                 if i % 10 == 0:
                     train_accuracy = accuracy.eval(feed_dict={x: batch[0], y_: batch[1], keep_prob: 1.0})
                     print('step %d, training accuracy %g' % (i, train_accuracy))
-                train_step.run(feed_dict={x: batch[0], y_: batch[1], keep_prob: 0.75})
+                train_step.run(feed_dict={x: batch[0], y_: batch[1], keep_prob: dropout})
             train_end = datetime.datetime.now()
             training_time.append(train_end-train_begin)#记录训练时间
             print('--------------------------------')
@@ -240,11 +246,38 @@ def main():
             print('\033[1;35m training acc: \033[0m!', temp_acc)
             print('--------------------------------')
             #print('test accuracy %g' % accuracy.eval(feed_dict={x: test_set[0], y_: test_set[1], keep_prob: 1.0}))
-    print('\033[1;35m training time: \033[0m!',acc_arr)
+    print('\033[1;35m training acc: \033[0m!',acc_arr)
     print('\033[1;35m average acc: \033[0m!',sum(acc_arr)/len(acc_arr))
     print('\033[1;35m total training time: \033[0m!', sum(training_time))
     print('\033[1;35m total testing time: \033[0m! ' ,sum(testing_time))
     print('\033[1;35m average forward time per image: \033[0m! ',sum(testing_time)/11280)
+
+    # 写入文件
+    result_file = open('F:/face_data/test_result/result.txt', 'a')
+    result_file.write('date:' + str(datetime.datetime.now()) + '\n')
+    result_file.write('image_size: ' + str(image_size) + '\n')
+    result_file.write('batch_size: ' + str(batch_size) + '\n')
+    result_file.write('iter_num: ' + str(iter_num) + '\n')
+    result_file.write('dropout: ' + str(0.75) + '\n')
+    result_file.write('learn_rate: ' + str(learn_rate) + '\n')
+    result_file.write('conv_layers: ' + str(conv_layers) + '\n')
+    result_file.write('pooling_layers: ' + str(pooling_layers) + '\n')
+    result_file.write('full_connected_layers: ' + str(full_connected_layers) + '\n')
+    result_file.write('training acc: '+str(acc_arr)+'\n')
+    result_file.write('average acc: '+str(sum(acc_arr)/len(acc_arr))+'\n')
+    result_file.write('total training time: '+str(sum(training_time))+'\n')
+    result_file.write('total testing time: '+str(sum(testing_time))+'\n')
+    result_file.write('average forward time per image: '+str(sum(testing_time)/11280)+'\n')
+    result_file.write('\n')
+    result_file.write('\n')
+
+    result_file.close()
+    #备份
+    result_file = open('F:/face_data/test_result/result.txt', 'r')
+    result_file_backup = open('G:/result_backup.txt', 'w')
+    for line in result_file:
+        result_file_backup.write(line)
+    result_file_backup.close()
 
 
 main()
