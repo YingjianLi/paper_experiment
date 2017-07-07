@@ -16,11 +16,11 @@ from sklearn.metrics import confusion_matrix
 import tensorflow as tf
 
 #重要参数,运行结束时写入文件
-batch_size = 100
-iter_num = 15000
+batch_size = 50
+iter_num = 10000
 dropout = 1
 learn_rate = 10e-3
-conv_layers = [3,5,1,'same']#stride = 1, pading=same
+conv_layers = [3,3,1,'same']#stride = 1, pading=same
 pooling_layers=[3,3,2,'same']#stride = 2
 full_connected_layers = [2,1024,7]
 image_size = 64
@@ -41,7 +41,7 @@ def deep_cnn(images):
     x_image = tf.reshape(images, [-1, 64, 64, 1])
 
     # First convolutional layer - maps one grayscale image to 32 feature maps.
-    W_conv1 = weight_variable([5, 5, 1, 32])
+    W_conv1 = weight_variable([3, 3, 1, 32])
     b_conv1 = bias_variable([32])
     h_conv1 = tf.nn.relu(conv2d(x_image, W_conv1) + b_conv1)
 
@@ -49,7 +49,7 @@ def deep_cnn(images):
     h_pool1 = max_pool_2x2(h_conv1)
 
     # Second convolutional layer -- maps 32 feature maps to 64.
-    W_conv2 = weight_variable([5, 5, 32, 64])
+    W_conv2 = weight_variable([3, 3, 32, 64])
     b_conv2 = bias_variable([64])
     h_conv2 = tf.nn.relu(conv2d(h_pool1, W_conv2) + b_conv2)
 
@@ -57,7 +57,7 @@ def deep_cnn(images):
     h_pool2 = max_pool_2x2(h_conv2)
 
     # third convolutional layer -- maps 64 feature maps to 128.
-    W_conv3 = weight_variable([5, 5, 64, 128])
+    W_conv3 = weight_variable([3, 3, 64, 128])
     b_conv3 = bias_variable([128])
     h_conv3 = tf.nn.relu(conv2d(h_pool2, W_conv3) + b_conv3)
     #Third pooling
