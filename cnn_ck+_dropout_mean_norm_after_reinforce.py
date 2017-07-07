@@ -16,10 +16,10 @@ from sklearn.metrics import confusion_matrix
 import tensorflow as tf
 
 #重要参数,运行结束时写入文件
-batch_size = 50
-iter_num = 10000
+batch_size = 100
+iter_num = 15000
 dropout = 1
-learn_rate = 10e-4
+learn_rate = 10e-3
 conv_layers = [3,5,1,'same']#stride = 1, pading=same
 pooling_layers=[3,3,2,'same']#stride = 2
 full_connected_layers = [2,1024,7]
