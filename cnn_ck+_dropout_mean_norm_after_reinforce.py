@@ -16,8 +16,8 @@ from sklearn.metrics import confusion_matrix
 import tensorflow as tf
 
 #重要参数,运行结束时写入文件
-batch_size = 100
-iter_num = 20000
+batch_size = 50
+iter_num = 40000
 dropout = 1
 learn_rate = 10e-3
 conv_layers = [3,5,1,'same']#stride = 1, pading=same
@@ -92,7 +92,7 @@ def deep_cnn(images):
     W_fc3 = weight_variable([1024, 7])
     b_fc3 = bias_variable([7])
 
-    y_conv = tf.matmul(h_fc1_drop, W_fc3) + b_fc3
+    y_conv = tf.matmul(h_fc1_drop, W_fc3) + b_fc3# softmax?
 
 
 
@@ -242,16 +242,16 @@ def main():
             test_end = datetime.datetime.now()
             testing_time.append(test_end-test_begin)
 
-            print('\033[1;35m testing time: \033[0m!',test_end-test_begin)
+            print('\033[1;35m testing time:   \033[0m!',test_end-test_begin)
             print('\033[1;35m training acc: \033[0m!', temp_acc)
             print('--------------------------------')
             #print('test accuracy %g' % accuracy.eval(feed_dict={x: test_set[0], y_: test_set[1], keep_prob: 1.0}))
         saver = tf.train.Saver()
-        saver.save(sess, "F:/face_data/10020000")
+        saver.save(sess, "F:/face_data/5040000")
     print('\033[1;35m training acc: \033[0m!',acc_arr)
     print('\033[1;35m average acc: \033[0m!',sum(acc_arr)/len(acc_arr))
     print('\033[1;35m total training time: \033[0m!', sum(training_time))
-    print('\033[1;35m total testing time: \033[0m! ' ,sum(testing_time))
+    print('\033[1;35m total testing time: \033[0m! ',sum(testing_time))
     print('\033[1;35m average forward time per image: \033[0m! ',sum(testing_time)/11280)
 
     # 写入文件
