@@ -17,7 +17,7 @@ import tensorflow as tf
 
 #重要参数,运行结束时写入文件
 batch_size = 50
-iter_num = 40000
+iter_num = 1000
 dropout = 1
 learn_rate = 10e-3
 conv_layers = [3,5,1,'same']#stride = 1, pading=same
@@ -92,7 +92,7 @@ def deep_cnn(images):
     W_fc3 = weight_variable([1024, 7])
     b_fc3 = bias_variable([7])
 
-    y_conv = tf.matmul(h_fc1_drop, W_fc3) + b_fc3# softmax?
+    y_conv = tf.matmul(h_fc1_drop, W_fc3) + b_fc3# softmax?加上后效果很差
 
 
 
