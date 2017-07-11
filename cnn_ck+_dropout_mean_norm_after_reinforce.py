@@ -16,8 +16,8 @@ from sklearn.metrics import confusion_matrix
 import tensorflow as tf
 
 #重要参数,运行结束时写入文件
-batch_size = 50
-iter_num = 1000
+batch_size = 100
+iter_num = 40000
 dropout = 1
 learn_rate = 10e-3
 conv_layers = [3,5,1,'same']#stride = 1, pading=same
@@ -280,6 +280,4 @@ def main():
     for line in result_file:
         result_file_backup.write(line)
     result_file_backup.close()
-
-
 main()
