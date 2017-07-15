@@ -154,7 +154,7 @@ image_list = []#存储每一折产生的训练集
 def get_batch(start_num, batch_size, file_path):
     img_list = []
     label_list = []
-    for x in range(start_num, start_num + batch_size):  # 从srat开始去batch张图片，根据random中的随机数随机取
+    for x in range(start_num, start_num + batch_size):  # 从strat开始去batch张图片，根据random中的随机数随机取
         img = Image.open(file_path + str(image_list[x]+ 1) + ".png")  # random_arr[x]对应的图片编号是random_arr[x]+1
         im = np.array(img.resize([64, 64]), 'f')  # 图转数组
 
@@ -212,7 +212,7 @@ def main():
                     #temp_count += 1
                     ii += 1
             for iii in range(fold * 1128, fold * 1128 + 1128):
-                image_list.append(random_arr[iii])#这一折的测试集加在尾部
+                image_list.append(random_arr[iii])# 这一折的测试集加在尾部
 
             count = 1
             train_begin = datetime.datetime.now()
@@ -221,8 +221,8 @@ def main():
                 # 留下1128张测试
                 if count > (10152 - batch_size):  # 保证最后一个batch不会取到数据集外,保证只去前10152中的图片
                     temp_image_list = image_list[0:10152]  # 包含10151,不包含10152
-                    random.shuffle(temp_image_list)#训练数据置乱然后再从头训练，避免每次迭代都用相同的数据
-                    for indexx in range(0,10152):#range 不包括结尾
+                    random.shuffle(temp_image_list)# 训练数据置乱然后再从头训练，避免每次迭代都用相同的数据
+                    for indexx in range(0,10152):# range 不包括结尾
                         image_list[indexx]=temp_image_list[indexx]
                     count = 1
                 # if count>(5640-batch_size):#保证最后一个batch不会取到数据集外
