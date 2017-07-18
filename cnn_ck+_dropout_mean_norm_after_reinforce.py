@@ -123,7 +123,7 @@ def bias_variable(shape):
 
 # 读出所有的label
 def get_label():
-    fin = open("F:/face_data/ck+123/ck+labels_maxtrix_with_NE.txt", 'r')
+    fin = open("/home/bigboy/face_data/ck+123/ck+labels_maxtrix_with_NE.txt", 'r')
     counter = 0
     label_list_all_temp = []
     for line in fin:
@@ -227,7 +227,7 @@ def main():
                     count = 1
                 # if count>(5640-batch_size):#保证最后一个batch不会取到数据集外
                 #    count = 1
-                batch = get_batch(count, batch_size, "F:/face_data/ck+123_faces/")
+                batch = get_batch(count, batch_size, "/home/bigboy/face_data/ck+123_faces/")
                 count += batch_size
                 # print(batch)
 
@@ -239,7 +239,7 @@ def main():
             training_time.append(train_end-train_begin)#记录训练时间
             print('--------------------------------')
             print('\033[1;35m training time: \033[0m!', train_end - train_begin)
-            test_set = get_batch(10152, 1128, "F:/face_data/ck+123_faces/")  # 从7521开始取，取到11280（包括）,376
+            test_set = get_batch(10152, 1128, "/home/bigboy/face_data/ck+123_faces/")  # 从7521开始取，取到11280（包括）,376
             test_begin = datetime.datetime.now()
             temp_acc = accuracy.eval(feed_dict={x: test_set[0], y_: test_set[1], keep_prob: 1.0})
             acc_arr.append(temp_acc)
@@ -259,7 +259,7 @@ def main():
     print('\033[1;35m average forward time per image: \033[0m! ',sum(testing_time)/11280)
 
     # 写入文件
-    result_file = open('F:/face_data/test_result/result.txt', 'a')
+    result_file = open('/home/bigboy/face_data/test_result/result.txt', 'a')
     result_file.write('date:' + str(datetime.datetime.now()) + '\n')
     result_file.write('image_size: ' + str(image_size) + '\n')
     result_file.write('batch_size: ' + str(batch_size) + '\n')
@@ -279,8 +279,8 @@ def main():
 
     result_file.close()
     #备份
-    result_file = open('F:/face_data/test_result/result.txt', 'r')
-    result_file_backup = open('G:/result_backup.txt', 'w')
+    result_file = open('/home/bigboy/face_data/test_result/result.txt', 'r')
+    result_file_backup = open('/home/bigboy/result_backup.txt', 'w')
     for line in result_file:
         result_file_backup.write(line)
     result_file_backup.close()
