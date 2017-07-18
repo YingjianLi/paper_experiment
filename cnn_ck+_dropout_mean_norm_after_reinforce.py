@@ -15,14 +15,14 @@ from sklearn.metrics import confusion_matrix
 
 import tensorflow as tf
 
-#重要参数,运行结束时写入文件
-batch_size = 100
-iter_num = 10000
+# 重要参数,运行结束时写入文件
+batch_size = 10
+iter_num = 100
 dropout = 1
 learn_rate = 10e-4
-conv_layers = [3,5,1,'same']#stride = 1, pading=same
-pooling_layers=[3,3,2,'same']#stride = 2
-full_connected_layers = [2,1024,7]
+conv_layers = [3, 5, 1, 'same']# stride = 1, pading=same
+pooling_layers = [3, 3, 2, 'same']# stride = 2
+full_connected_layers = [2, 1024, 7]
 image_size = 64
 
 def deep_cnn(images):
@@ -239,10 +239,7 @@ def main():
             training_time.append(train_end-train_begin)#记录训练时间
             print('--------------------------------')
             print('\033[1;35m training time: \033[0m!', train_end - train_begin)
-
-
-            test_set = get_batch(10152, 1128, "F:/face_data/ck+123_faces/")  # 从7521开始取，取到11280（包括）,3760
-
+            test_set = get_batch(10152, 1128, "F:/face_data/ck+123_faces/")  # 从7521开始取，取到11280（包括）,376
             test_begin = datetime.datetime.now()
             temp_acc = accuracy.eval(feed_dict={x: test_set[0], y_: test_set[1], keep_prob: 1.0})
             acc_arr.append(temp_acc)
