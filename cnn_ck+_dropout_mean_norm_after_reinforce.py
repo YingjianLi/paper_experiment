@@ -258,6 +258,7 @@ def main():
     print('\033[1;35m total testing time: \033[0m! ',sum(testing_time))
     print('\033[1;35m average forward time per image: \033[0m! ',sum(testing_time)/11280)
 
+    '''
     # 写入文件
     result_file = open('/home/bigboy/face_data/test_result/result.txt', 'a')
     result_file.write('date:' + str(datetime.datetime.now()) + '\n')
@@ -284,4 +285,5 @@ def main():
     for line in result_file:
         result_file_backup.write(line)
     result_file_backup.close()
+    '''
 main()
